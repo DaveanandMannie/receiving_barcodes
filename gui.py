@@ -3,7 +3,6 @@ from datetime import datetime
 
 from CTkMessagebox import CTkMessagebox
 from customtkinter import CTk, CTkButton, CTkLabel, StringVar, filedialog
-
 from lib.logic import generate_csv, generate_data
 
 

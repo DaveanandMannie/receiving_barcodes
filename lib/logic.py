@@ -11,8 +11,12 @@ def generate_data(file_path: str) -> label_data:
                 ref = row['Reference']
 
             in_qty = float(row['Operations/Stock Operation/Demand'])
-            pkg_qty = float(row['Operations/Packaging Quantity'])
-            quants: tuple[float, float] = divmod(in_qty, pkg_qty)
+            if row['Operations/Packaging Quantity']:
+                pkg_qty = float(row['Operations/Packaging Quantity'])
+                quants: tuple[float, float] = divmod(in_qty, pkg_qty)
+            else:
+                quants: tuple[float, float] = (in_qty, in_qty)
+
             csv_data: dict[str, str] = {
                 'reference': ref.replace('/','-'),
                 'partial': 'False',
