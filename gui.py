@@ -13,8 +13,8 @@ class Application(CTk):
         self.title('Receiving Barcode Generator')
         self.iconbitmap('resources/icon.ico')
         self.geometry("500x300")
-        self.out_path=StringVar(value='Select Folder')
-        self.file_path=StringVar(value='Select File')
+        self.out_path = StringVar(value='Select Folder')
+        self.file_path = StringVar(value='Select File')
 
         # Configure grid
         self.columnconfigure(0, weight=0)
@@ -23,13 +23,16 @@ class Application(CTk):
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=2)
 
-        self.out_path_label = CTkLabel(self, textvariable=self.out_path)
+        self.out_path_label = CTkLabel(self,
+                                       textvariable=self.out_path,
+                                       wraplength=200
+                                       )
         self.out_path_button = CTkButton(self,
                                          command=self._set_out_dir,
                                          text='Select Output Folder'
                                          )
-        self.out_path_label.grid(column=1, row=0, sticky='ew', padx=(10,10))
-        self.out_path_button.grid(column=0, row=0, sticky='ew', padx=(10,10))
+        self.out_path_label.grid(column=1, row=0, sticky='ew', padx=(10, 10))
+        self.out_path_button.grid(column=0, row=0, sticky='ew', padx=(10, 10))
 
         self.file_path_button = CTkButton(self,
                                           command=self._get_file_path,
@@ -37,10 +40,11 @@ class Application(CTk):
                                           )
         self.file_path_label = CTkLabel(self,
                                         textvariable=self.file_path,
-                                        text='Select File'
+                                        text='Select File',
+                                        wraplength=200
                                         )
-        self.file_path_button.grid(column=0, row=1, sticky='ew', padx=(10,10))
-        self.file_path_label.grid(column=1, row=1, sticky='ew', padx=(10,10))
+        self.file_path_button.grid(column=0, row=1, sticky='ew', padx=(10, 10))
+        self.file_path_label.grid(column=1, row=1, sticky='ew', padx=(10, 10))
 
         self.generate_button = CTkButton(self,
                                          command=self._generate_csv,
@@ -52,7 +56,7 @@ class Application(CTk):
             row=2,
             columnspan=2,
             sticky='ew',
-            padx=(10,10)
+            padx=(10, 10)
         )
 
     def _generate_csv(self):
@@ -62,13 +66,15 @@ class Application(CTk):
                 f'receiving_{datetime.now().strftime('%d-%m-%Y %H_%M')}.csv'
             )
             generate_csv(
-                out_path=res_path ,
+                out_path=res_path,
                 data=generate_data(self.file_path.get())
             )
-            CTkMessagebox(self,
-                        title='Barcodes Generated',
-                        message='Done',
-                        icon='check')
+            CTkMessagebox(
+                self,
+                title='Barcodes Generated',
+                message='Done',
+                icon='check'
+                )
         except Exception as err:
             CTkMessagebox(self,
                           title='Uh Oh something went wrong!',
@@ -90,10 +96,11 @@ class Application(CTk):
         self._validate_paths()
 
     def _validate_paths(self):
-        if self.out_path.get() != 'Select Folder' and self.file_path.get() != 'Select File': # noqa: E501
+        if self.out_path.get() != 'Select Folder' and self.file_path.get() != 'Select File':  # noqa: E501
             self.generate_button.configure(
                 fg_color='green',
-                hover=True,hover_color='darkgreen'
+                hover=True,
+                hover_color='darkgreen'
             )
 
 

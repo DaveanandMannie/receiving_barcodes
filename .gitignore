@@ -2,3 +2,4 @@ venv/
 pyrightconfig.json
 tests/
 *__pycache__
+builds/
