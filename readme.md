@@ -4,3 +4,4 @@ A simple GUI to turn a Receipt export from odoo into a csv parsable by Bartender
     1. `https://github.com/DaveanandMannie/receiving_barcodes.git`
     2. `pip install requirements.txt`
     3. `python build.py`
+1. Export receiving barcodes excel from the export sheet

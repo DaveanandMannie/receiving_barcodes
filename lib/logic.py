@@ -20,7 +20,7 @@ def generate_data(file_path: str) -> label_data:
             csv_data: dict[str, str] = {
                 'reference': ref.replace('/','-'),
                 'partial': 'False',
-                'product': row['Operations/Display Name'],
+                'product': row['Operations/Product/PG SKU(Variant Code)'],
                 'qty': str(pkg_qty) if pkg_qty else 'Update Product Packaging',
                 'barcode': row['Operations/Barcode']
             }
@@ -36,5 +36,5 @@ def generate_csv(out_path: str, data: label_data):
     headers = ['reference', 'product', 'qty', 'barcode', 'partial']
     with open(out_path, 'w', newline='') as file:
         writer = DictWriter(file, fieldnames=headers)
-        writer.writeheader()
+        # writer.writeheader()
         writer.writerows(data)
