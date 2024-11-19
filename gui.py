@@ -82,14 +82,12 @@ class Application(CTk):
 
     def _set_out_dir(self):
         dir = filedialog.askdirectory()
-        print(dir)
         if dir:
             self.out_path.set(dir)
         self._validate_paths()
 
     def _get_file_path(self):
         fp = filedialog.askopenfilename()
-        print(fp)
         if fp:
             self.file_path.set(fp)
         self._validate_paths()

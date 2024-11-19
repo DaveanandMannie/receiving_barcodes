@@ -11,17 +11,24 @@ def generate_data(file_path: str) -> label_data:
                 ref = row['Reference']
 
             in_qty = float(row['Operations/Stock Operation/Demand'])
-            if row['Operations/Packaging Quantity']:
-                pkg_qty = float(row['Operations/Packaging Quantity'])
+            pkg_qty = float(row['Operations/Packaging Quantity'])
+            fb_pgk_qty = float(row['Operations/Product/Product Packages'])
+            if pkg_qty == 0.0:
+                quants: tuple[float, float] = divmod(in_qty, fb_pgk_qty)
+            elif pkg_qty > 0.0:
                 quants: tuple[float, float] = divmod(in_qty, pkg_qty)
+                print('second')
             else:
+                print('third')
                 quants: tuple[float, float] = (in_qty, in_qty)
+
+            print(quants)
 
             csv_data: dict[str, str] = {
                 'reference': ref.replace('/','-'),
                 'partial': 'False',
                 'product': row['Operations/Product/PG SKU(Variant Code)'],
-                'qty': str(pkg_qty) if pkg_qty else 'Update Product Packaging',
+                'qty': fb_pgk_qty,
                 'barcode': row['Operations/Barcode']
             }
             for _ in range(int(quants[0])):
